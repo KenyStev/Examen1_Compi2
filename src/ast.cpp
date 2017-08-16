@@ -82,3 +82,14 @@ void IfStatement::execute()
     else if(elseStmt)
         elseStmt->execute();
 }
+
+void ForStatement::execute()
+{
+    vars[id] = from->evaluate();
+    int toVal = to->evaluate();
+    while(vars[id] < toVal)
+    {
+        block->execute();
+        vars[id]++;
+    }
+}

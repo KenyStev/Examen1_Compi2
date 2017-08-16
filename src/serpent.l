@@ -48,6 +48,10 @@ LETTER [a-zA-Z]
 "in"	{ return KW_IN; }
 "range"	{ return KW_RANGE; }
 [ \t\n] { /* Nada */ }
+[0-9]*	{
+	yylval.num_t = atoi(yytext);
+	return TK_NUM;
+}
 [a-zA-Z]+[0-9a-zA-Z]*	{ yylval.id_t = (char*)malloc(yyleng+1); strcpy(yylval.id_t,yytext); return TK_ID; }
 \"[^"\n]*\"	{ 
 	//printf("-->%s<--\n",yytext);

@@ -184,4 +184,23 @@ public:
   StatementKind getKind(){ return IF_STATEMENT; }
 };
 
+class ForStatement : public Statement
+{
+public:
+  ForStatement(string id, Expr*from,Expr*to,Statement*block)
+  {
+    this->id = id;
+    this->from=from;
+    this->to=to;
+    this->block=block;
+  }
+
+  string id;
+  Expr *from, *to;
+  Statement *block;
+
+  void execute();
+  StatementKind getKind(){ return FOR_STATEMENT; }
+};
+
 #endif
