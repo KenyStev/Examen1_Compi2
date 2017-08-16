@@ -35,7 +35,7 @@ Statement *input;
 
 %token OP_EXP OP_LT OP_GT OP_LTE OP_GTE OP_NE OP_EQ
 %type<expr_t> argument expra expr term exponent factor relational_expr
-%type<statement_t> print_statement assign_statement opt_else if_statement for_statement
+%type<statement_t> print_statement assign_statement opt_else if_statement for_statement while_statement
 %type<statement_t> statement statement_block
 %type<blkstatement_t> statement_list
 %type<exprlist_t> arg_list
@@ -52,6 +52,7 @@ statement_list: statement_list statement { $$ = $1; $$->add($2); }
 statement: print_statement ';'
 		  | assign_statement ';'
 		  | for_statement
+		  | while_statement
 		  | if_statement
 ;
 
@@ -66,6 +67,9 @@ for_statement: KW_FOR TK_ID KW_IN KW_RANGE '(' expr ',' expr ')' statement_block
 	free($2);
 	$$ = new ForStatement(id,$6,$8,$10);
 }
+;
+
+while_statement: KW_WHILE expr statement_block 	{ $$ = new WhileStatement($2,$3); }
 ;
 
 statement_block: '{' statement_list '}'  { $$ = $2; }

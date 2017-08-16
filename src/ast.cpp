@@ -93,3 +93,9 @@ void ForStatement::execute()
         vars[id]++;
     }
 }
+
+void WhileStatement::execute()
+{
+    while(expr->evaluate())
+        block->execute();
+}

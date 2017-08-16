@@ -203,4 +203,20 @@ public:
   StatementKind getKind(){ return FOR_STATEMENT; }
 };
 
+class WhileStatement : public Statement
+{
+public:
+  WhileStatement(Expr*expr,Statement*block)
+  {
+    this->expr=expr;
+    this->block=block;
+  }
+
+  Expr *expr;
+  Statement *block;
+  
+  void execute();
+  StatementKind getKind(){ return WHILE_STATEMENT; }
+};
+
 #endif
