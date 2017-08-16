@@ -40,9 +40,25 @@ LETTER [a-zA-Z]
 ";"  { return ';'; }
 "input"	{ return KW_INPUT; }
 "print"	{ return KW_PRINT; }
+"if"	{ return KW_IF; }
+"else"	{ return KW_ELSE; }
+"else"	{ return KW_ELSE; }
+"while"	{ return KW_WHILE; }
+"for"	{ return KW_FOR; }
+"in"	{ return KW_IN; }
+"range"	{ return KW_RANGE; }
 [ \t\n] { /* Nada */ }
 [a-zA-Z]+[0-9a-zA-Z]*	{ yylval.id_t = (char*)malloc(yyleng+1); strcpy(yylval.id_t,yytext); return TK_ID; }
 \"[^"\n]*\"	{ 
+	//printf("-->%s<--\n",yytext);
+	yylval.id_t = (char*)malloc(yyleng+1);
+	yytext++; 
+	yytext[yyleng-2]=0;
+	strcpy(yylval.id_t,yytext);
+	return STRING_LITERAL;
+	//BEGIN(INITIAL);
+}
+'[^"\n]*'	{ 
 	//printf("-->%s<--\n",yytext);
 	yylval.id_t = (char*)malloc(yyleng+1);
 	yytext++; 

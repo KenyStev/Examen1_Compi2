@@ -35,8 +35,8 @@ Statement *input;
 
 %token OP_EXP OP_LT OP_GT OP_LTE OP_GTE OP_NE OP_EQ
 %type<expr_t> argument expra expr term exponent factor relational_expr
-%type<statement_t> print_statement assign_statement
-%type<statement_t> statement 
+%type<statement_t> print_statement assign_statement opt_else if_statement 
+%type<statement_t> statement statement_block
 %type<blkstatement_t> statement_list
 %type<exprlist_t> arg_list
 
@@ -51,6 +51,17 @@ statement_list: statement_list statement { $$ = $1; $$->add($2); }
 
 statement: print_statement ';'
 		  | assign_statement ';'
+		  | if_statement
+;
+
+if_statement: KW_IF expr statement_block opt_else	{ $$ = new IfStatement($2,$3,$4); }
+;
+
+opt_else: KW_ELSE statement_block	{ $$ = $2; }
+;
+
+
+statement_block: '{' statement_list '}'  { $$ = $2; }
 ;
 
 

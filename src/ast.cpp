@@ -74,3 +74,11 @@ void PrintStatement::execute()
 
     }
 }
+
+void IfStatement::execute()
+{
+    if(expr->evaluate())
+        ifStmt->execute();
+    else if(elseStmt)
+        elseStmt->execute();
+}

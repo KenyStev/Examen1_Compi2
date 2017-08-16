@@ -168,4 +168,20 @@ public:
   ExprList espress;
 };
 
+class IfStatement : public Statement
+{
+public:
+  IfStatement(Expr*expr,Statement*ifStmt,Statement*elseStmt)
+  {
+    this->expr=expr;
+    this->ifStmt=ifStmt;
+    this->elseStmt=elseStmt;
+  }
+  
+  Expr *expr;
+  Statement *ifStmt,*elseStmt;
+  void execute();
+  StatementKind getKind(){ return IF_STATEMENT; }
+};
+
 #endif
