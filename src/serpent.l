@@ -54,24 +54,20 @@ LETTER [a-zA-Z]
 }
 [a-zA-Z]+[0-9a-zA-Z]*	{ yylval.id_t = (char*)malloc(yyleng+1); strcpy(yylval.id_t,yytext); return TK_ID; }
 \"[^"\n]*\"	{ 
-	//printf("-->%s<--\n",yytext);
 	yylval.id_t = (char*)malloc(yyleng+1);
+	yytext[yyleng-1]=0;
 	yytext++; 
-	yytext[yyleng-2]=0;
 	strcpy(yylval.id_t,yytext);
 	return STRING_LITERAL;
-	//BEGIN(INITIAL);
 }
-'[^"\n]*'	{ 
-	//printf("-->%s<--\n",yytext);
+'[^'\n]*'	{ 
 	yylval.id_t = (char*)malloc(yyleng+1);
+	yytext[yyleng-1]=0;
 	yytext++; 
-	yytext[yyleng-2]=0;
 	strcpy(yylval.id_t,yytext);
 	return STRING_LITERAL;
-	//BEGIN(INITIAL);
 }
 <INITIAL><<EOF>>	{ yyterminate(); }
-.		{ printf("Unexpected Token! %s ",yytext); yyterminate(); }
+.		{ printf("Unexpected Token! %s (line:%d)",yytext,yylineno); yyterminate(); }
 
 %%
